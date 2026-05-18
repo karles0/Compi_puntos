@@ -162,7 +162,7 @@ public class LL1Parser {
                     }
                 }
 
-                derivation.add(deriveCurrentForm(stack));
+                derivation.add(deriveCurrentForm(stack, input, ip));
             }
         }
     }
@@ -233,11 +233,35 @@ public class LL1Parser {
         return String.join(" ", input.subList(ip, input.size()));
     }
 
-    private String deriveCurrentForm(Deque<String> stack) {
-        List<String> list = new ArrayList<>(stack);
-        Collections.reverse(list);
-        list.remove(Grammar.EOF);
-        return String.join(" ", list);
+    /**
+     * Construye la forma sentencial actual de la derivación por la izquierda:
+     *   [terminales ya consumidos]  +  [contenido de la pila, del tope al fondo, sin EOF]
+     *
+     * Antes este método solo mostraba la pila invertida (sin terminales matched
+     * y con el tope a la derecha), por eso la "derivación" no coincidía con la
+     * derivación por la izquierda estándar.
+     */
+    private String deriveCurrentForm(Deque<String> stack, List<String> input, int ip) {
+        StringBuilder sb = new StringBuilder();
+
+        // 1) Terminales ya consumidos (prefijo emitido de la entrada)
+        for (int i = 0; i < ip; i++) {
+            String tok = input.get(i);
+            if (tok.equals(Grammar.EOF)) continue;
+            if (sb.length() > 0) sb.append(' ');
+            sb.append(tok);
+        }
+
+        // 2) Símbolos pendientes en la pila: tope -> fondo (omitiendo EOF).
+        //    En ArrayDeque, iterar es head -> tail, es decir, tope -> fondo,
+        //    que es justo el orden en que aparecen en la forma sentencial.
+        for (String s : stack) {
+            if (s.equals(Grammar.EOF)) continue;
+            if (sb.length() > 0) sb.append(' ');
+            sb.append(s);
+        }
+
+        return sb.toString();
     }
 
     private ParseResult buildError(ParseResult result, List<ParseStep> steps,
