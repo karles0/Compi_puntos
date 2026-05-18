@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <div class="mermaid">
+    flowchart LR
+      s0["<b>I0</b><br/>E' -> • E<br/>E -> • T E'"]
+      s1["<b>I1</b><br/>E' -> E •"]
+      s0 -->|"E"| s1
+  </div>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+# Java Build Outputs
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# VS Code
+.vscode/
+
+# Local Environment variables (contains sensitive details)
+.env
+.env.local
+
+# Operating System Files
+.DS_Store
+Thumbs.db
