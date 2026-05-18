@@ -223,6 +223,9 @@ public abstract class LRParserBase {
             String inpStr   = String.join(" ", input.subList(ip, input.size()));
 
             String action = actionTable.getOrDefault(state, Map.of()).get(current);
+            if (action != null && action.contains("/")) {
+                action = action.split("/")[0];
+            }
 
             if (action == null) {
                 steps.add(new ParseStep(stackStr, inpStr, "ERROR",
