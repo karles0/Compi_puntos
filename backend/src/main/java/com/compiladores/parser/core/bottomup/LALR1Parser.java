@@ -276,6 +276,9 @@ public class LALR1Parser extends LRParserBase {
                         if (existing != null && !existing.equals(reduceAction)) {
                             String conflictType = existing.startsWith("s") ? "Shift/Reduce" : "Reduce/Reduce";
                             result.getConflicts().add(conflictType + " en estado " + i + " con símbolo '" + la + "' (Acciones: " + existing + " y " + reduceAction + ")");
+                            if (!existing.contains(reduceAction)) {
+                                actionTable.get(i).put(la, existing + "/" + reduceAction);
+                            }
                         } else {
                             actionTable.get(i).put(la, reduceAction);
                         }
